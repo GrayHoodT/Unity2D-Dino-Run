@@ -1,5 +1,6 @@
 # Unity2D-Dino-Run
 
 <p align="center">
-<img src = [[DinoRun]()](https://github.com/GrayHoodT/Unity2D-Dino-Run/assets/137641161/42b1f82a-a072-4344-93cb-1b54822dc4ee)
+<img src = "![DinoRun](https://github.com/GrayHoodT/Unity2D-Dino-Run/assets/137641161/457ba7b9-fcec-489d-9709-4008675a6093)" style = "width:200px">
+</img>
 </p>
