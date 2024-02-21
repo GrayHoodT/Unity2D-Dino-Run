@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dino : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public enum State
     {
@@ -11,12 +11,15 @@ public class Dino : MonoBehaviour
         Hit
     }
 
+    public bool isPlay;
+
     public float startJumpPower;
     public float jumpPower;
     public bool isGround;
 
     private Rigidbody2D rigid;
     private Animator anim;
+    private PlayerEvents playerEvent;
 
     private void Awake()
     {
@@ -34,7 +37,9 @@ public class Dino : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetButton("Jump"))
+        if (Input.GetButton("Jump") == true
+            && isPlay == true
+            && anim.GetInteger("State").Equals((int) State.Hit) == false)
         {
             jumpPower = Mathf.Lerp(jumpPower, 0, 0.1f);
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
@@ -46,7 +51,8 @@ public class Dino : MonoBehaviour
         if (other.CompareTag("Obstacle") == true)
         {
             rigid.simulated = false;
-            anim.SetInteger("State", (int)State.Hit);
+            anim.SetInteger("State", (int) State.Hit);
+            playerEvent.NotifyHit();
         }
     }
 
@@ -59,7 +65,8 @@ public class Dino : MonoBehaviour
 
             jumpPower = 1;
             isGround = true;
-            anim.SetInteger("State", (int)State.Move);
+            anim.SetInteger("State", (int) State.Move);
+            playerEvent.NotifyLanded();
         }
     }
 
@@ -71,15 +78,27 @@ public class Dino : MonoBehaviour
                 return;
 
             isGround = false;
-            anim.SetInteger("State", (int)State.Jump);
+            anim.SetInteger("State", (int) State.Jump);
+            playerEvent.NotifyJumped();
         }
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") == true
+            && isPlay == true 
+            && isGround == true
+            && anim.GetInteger("State").Equals((int)State.Hit) == false)
         {
             rigid.AddForce(Vector2.up * startJumpPower, ForceMode2D.Impulse);
         }
+    }
+
+    public bool Initialize(out PlayerEvents playerEvent)
+    {
+        playerEvent = new PlayerEvents();
+        this.playerEvent = playerEvent;
+
+        return true;
     }
 }

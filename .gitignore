@@ -79,3 +79,12 @@ crashlytics-build.properties
 *.txt
 /[Aa]ssets/[Mm]yAssets
 [Mm]yAssets.meta
+
+/[Aa]ssets/[Pp]lugins
+[Pp]lugins.meta
+
+/[Aa]ssets/[Rr]esources
+[Rr]esources.meta
+
+/[Aa]ssets/[Tt]extMesh Pro
+[Tt]extMesh Pro.meta
