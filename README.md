@@ -1,2 +1,5 @@
 # Unity2D-Dino-Run
-![Dino Run](https://github.com/GrayHoodT/Unity2D-Dino-Run/assets/137641161/e2b8e8c1-f607-4414-96f8-e68764232bad)
+
+<p align="center">
+<img src="![DinoRun](https://github.com/GrayHoodT/Unity2D-Dino-Run/assets/137641161/42b1f82a-a072-4344-93cb-1b54822dc4ee)">
+</p>
