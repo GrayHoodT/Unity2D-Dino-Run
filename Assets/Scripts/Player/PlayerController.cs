@@ -1,30 +1,41 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum State
-    {
-        Move,
-        Jump,
-        Hit
-    }
+    // 게임 플레이 시작했는지?
+    private bool isPlay;
 
-    public bool isPlay;
+    // 플레이어 점프력.
+    private float startJumpPower;
+    private float jumpPower;
 
-    public float startJumpPower;
-    public float jumpPower;
-    public bool isGround;
+    // 플레이어가 땅에 붙어 있는지?
+    private bool isGround;
 
+    // 플레이어 컴포넌트 참조.
     private Rigidbody2D rigid;
     private Animator anim;
-    private PlayerEvents playerEvent;
+
+    // Input.
+    private Controls controls;
+    private bool isJumpStarted;
+    private bool isJumpPerformed;
+
+    private PlayerEvents events;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        controls = new Controls();
+        controls.Player.Jump.started += OnJumpStarted;
+        controls.Player.Jump.performed += OnJumpPerformed;
+        controls.Player.Jump.canceled += OnJumpCanceled;
+        controls.Enable();
     }
 
     private void Start()
@@ -32,14 +43,14 @@ public class PlayerController : MonoBehaviour
         startJumpPower = 4;
         jumpPower = 1;
         isGround = true;
-        anim.SetInteger("State", (int)State.Move);
+        anim.SetInteger("State", (int) Enums.PlayerState.Move);
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetButton("Jump") == true
-            && isPlay == true
-            && anim.GetInteger("State").Equals((int) State.Hit) == false)
+        if (isPlay == true
+            && isJumpPerformed == true
+            && anim.GetInteger("State").Equals((int) Enums.PlayerState.Hit) == false)
         {
             jumpPower = Mathf.Lerp(jumpPower, 0, 0.1f);
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
@@ -51,8 +62,8 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Obstacle") == true)
         {
             rigid.simulated = false;
-            anim.SetInteger("State", (int) State.Hit);
-            playerEvent.NotifyHit();
+            anim.SetInteger("State", (int) Enums.PlayerState.Hit);
+            events.NotifyHit();
         }
     }
 
@@ -65,8 +76,9 @@ public class PlayerController : MonoBehaviour
 
             jumpPower = 1;
             isGround = true;
-            anim.SetInteger("State", (int) State.Move);
-            playerEvent.NotifyLanded();
+            isJumpStarted = false;
+            anim.SetInteger("State", (int) Enums.PlayerState.Move);
+            events.NotifyLanded();
         }
     }
 
@@ -78,18 +90,19 @@ public class PlayerController : MonoBehaviour
                 return;
 
             isGround = false;
-            anim.SetInteger("State", (int) State.Jump);
-            playerEvent.NotifyJumped();
+            anim.SetInteger("State", (int) Enums.PlayerState.Jump);
+            events.NotifyJumped();
         }
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Jump") == true
-            && isPlay == true 
+        if (isPlay == true
+            && isJumpStarted == true
             && isGround == true
-            && anim.GetInteger("State").Equals((int)State.Hit) == false)
+            && anim.GetInteger("State").Equals((int) Enums.PlayerState.Hit) == false)
         {
+            isJumpStarted = false;
             rigid.AddForce(Vector2.up * startJumpPower, ForceMode2D.Impulse);
         }
     }
@@ -97,8 +110,40 @@ public class PlayerController : MonoBehaviour
     public bool Initialize(out PlayerEvents playerEvent)
     {
         playerEvent = new PlayerEvents();
-        this.playerEvent = playerEvent;
+        events = playerEvent;
 
         return true;
     }
+
+    public void Enable()
+    {
+        isPlay = true;
+        controls.Enable();
+    }
+
+    public void Disable()
+    {
+        isPlay = false;
+        controls.Disable();
+    }
+
+    #region Callbacks
+
+    private void OnJumpStarted(InputAction.CallbackContext context)
+    {
+        isJumpStarted = true;
+    }
+
+    private void OnJumpPerformed(InputAction.CallbackContext context)
+    {
+        isJumpPerformed = true;
+    }
+
+    private void OnJumpCanceled(InputAction.CallbackContext context)
+    {
+        isJumpStarted = false;
+        isJumpPerformed = false;
+    }
+
+    #endregion
 }

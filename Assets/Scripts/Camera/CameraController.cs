@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public bool Initialize(out CameraEvents cameraEvent)
+    public bool Initialize(out CameraEvents events)
     {
-        cameraEvent = new CameraEvents();
-        cameraEvent.Moved += MoveCameraByGameStart;
-        cameraEvent.Punched += PunchCameraByPlayerHit;
+        events = new CameraEvents();
+        events.Move += MoveCameraByGameStart;
+        events.Punch += PunchCameraByPlayerHit;
 
         return true;
     }
@@ -22,6 +22,6 @@ public class CameraController : MonoBehaviour
 
     private void PunchCameraByPlayerHit()
     {
-        transform.DOPunchPosition(Vector3.one * 0.1f, 20, 1).SetEase(Ease.InOutFlash);
+        transform.DOPunchPosition(Vector3.one * 0.1f, 1, 20).SetEase(Ease.InOutFlash);
     }
 }

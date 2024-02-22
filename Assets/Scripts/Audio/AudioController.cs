@@ -8,9 +8,16 @@ public class AudioController : MonoBehaviour
     private IObjectPool<SfxSpeaker> sfxPool;
     private SfxSpeaker sfxSpeakerPrefab;
 
+    [SerializeField]
+    private List<AudioClip> sfxClipList;
+
+    //TODO: 추 후에 옵션 설정 기능 추가할 때 AudioMixer 조절 기능 추가하기.
+    private AudioSource bgmAudioSource;
+
     private void Awake()
     {
-        sfxSpeakerPrefab = Resources.Load<SfxSpeaker>(Defines.SFX_SPEAKER_PREFAB_PATH);
+        sfxSpeakerPrefab = Resources.Load<GameObject>(Defines.SFX_SPEAKER_PREFAB_PATH).GetComponent<SfxSpeaker>();
+        bgmAudioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -21,10 +28,16 @@ public class AudioController : MonoBehaviour
     public bool Initialize(out AudioEvents audioEvent)
     {
         audioEvent = new AudioEvents();
-
-        //TODO: AudioEvent 기능 구현 후, 콜백 메서드 할당하기.
+        audioEvent.PlaySFX += PlaySFX;
 
         return true;
+    }
+
+    private void PlaySFX(Enums.SFXClipType clipType)
+    {
+        var sfxClip = sfxClipList[(int) clipType];
+        var sfxSpeaker = sfxPool.Get();
+        sfxSpeaker.Play(sfxClip);
     }
 
     #region Pool Callbacks

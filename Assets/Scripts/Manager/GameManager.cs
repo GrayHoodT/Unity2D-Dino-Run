@@ -1,21 +1,30 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    // UI.
+    private Button tapToStartBtn;
+
+    // Camera.
     private CameraController cameraController;
     private CameraEvents cameraEvent;
 
-    private AudioController audioController;
-    private AudioEvents audioEvent;
-
+    // Player.
     private PlayerController playerController;
     private PlayerEvents playerEvent;
 
+    // Audio.
+    private AudioController audioController;
+    private AudioEvents audioEvent;
+  
     private void Awake()
     {
+        tapToStartBtn = GameObject.Find("Tap To Start Button").GetComponent<Button>();
+        tapToStartBtn.onClick.AddListener(GameStart);
+
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
         cameraController.Initialize(out cameraEvent);
 
@@ -28,22 +37,27 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        playerEvent.Hit += cameraEvent.NotifyPunched;
+        playerEvent.Jumped += () => audioEvent.NotifyPlaySFX(Enums.SFXClipType.PlayerJump);
+        playerEvent.Landed += () => audioEvent.NotifyPlaySFX(Enums.SFXClipType.PlayerLand);
+        playerEvent.Hit += GameEnd;
     }
 
     public void GameStart()
     {
-        playerController.isPlay = true;
-        cameraEvent.NotifyMoved();
+        playerController.Enable();
+        cameraEvent.NotifyMove();
+        audioEvent.NotifyPlaySFX(Enums.SFXClipType.UIClick);
     }
 
     public void GamePause()
     {
-        playerController.isPlay = false;
+        playerController.Disable();
     }
 
     private void GameEnd()
     {
-        playerController.isPlay = false;
+        playerController.Disable();
+        cameraEvent.NotifyPunch();
+        audioEvent.NotifyPlaySFX(Enums.SFXClipType.PlayerHit);
     }
 }

@@ -5,5 +5,6 @@ using UnityEngine;
 
 public class AudioEvents : EventArgs
 {
-    //TODO: SFX Play 기능 추가하기.
+    public event Action<Enums.SFXClipType> PlaySFX;
+    public void NotifyPlaySFX(Enums.SFXClipType clipType) => PlaySFX?.Invoke(clipType);
 }

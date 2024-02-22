@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class CameraEvents : EventArgs
 {
-    public event Action Moved;
-    public void NotifyMoved() => Moved?.Invoke();
+    public event Action Move;
+    public void NotifyMove() => Move?.Invoke();
 
-    public event Action Punched;
-    public void NotifyPunched() => Punched?.Invoke();
+    public event Action Punch;
+    public void NotifyPunch() => Punch?.Invoke();
 }
