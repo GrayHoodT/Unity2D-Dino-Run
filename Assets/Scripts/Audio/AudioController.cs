@@ -29,6 +29,8 @@ public class AudioController : MonoBehaviour
     {
         audioEvent = new AudioEvents();
         audioEvent.PlaySFX += PlaySFX;
+        audioEvent.PlayBGM += PlayBGM;
+        audioEvent.StopBGM += StopBGM;
 
         return true;
     }
@@ -38,6 +40,16 @@ public class AudioController : MonoBehaviour
         var sfxClip = sfxClipList[(int) clipType];
         var sfxSpeaker = sfxPool.Get();
         sfxSpeaker.Play(sfxClip);
+    }
+
+    private void PlayBGM()
+    {
+        bgmAudioSource.Play();
+    }
+
+    private void StopBGM()
+    {
+        bgmAudioSource.Stop();
     }
 
     #region Pool Callbacks

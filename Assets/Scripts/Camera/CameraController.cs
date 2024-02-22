@@ -15,9 +15,9 @@ public class CameraController : MonoBehaviour
         return true;
     }
 
-    private void MoveCameraByGameStart()
+    private void MoveCameraByGameStart(float x)
     {
-        transform.DOMoveX(3.5f, 1f).SetEase(Ease.InOutFlash);
+        transform.DOMoveX(x, 1f).SetEase(Ease.InOutFlash);
     }
 
     private void PunchCameraByPlayerHit()
