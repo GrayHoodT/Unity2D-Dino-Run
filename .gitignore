@@ -77,6 +77,7 @@ crashlytics-build.properties
 # My Settings
 *.json
 *.txt
+*.meta
 /[Aa]ssets/[Mm]yAssets
 [Mm]yAssets.meta
 
@@ -90,5 +91,5 @@ crashlytics-build.properties
 [Tt]extMesh Pro.meta
 
 /[Ww]ebGL Builds
-[Cc]onnectwebgl.zip
 [Ww]ebgl_sharing
+[Cc]onnectwebgl.zip
