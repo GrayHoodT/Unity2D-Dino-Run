@@ -5,17 +5,9 @@
 </img>
 </p>
 
-1. 게임 플레이
-https://play.unity.com/mg/other/webgl-builds-392594
-
-2. 조작법
-
-  점프 - Space
-
-3. 제작 기간
-
-  1일
-
+1. 게임 플레이 : https://play.unity.com/mg/other/webgl-builds-392594
+2. 조작법 : 점프 - Space
+3. 제작 기간 : 1일
 4. 에셋 리스트
 - 폰트 : https://df.nexon.com/data/font/dnfbitbitv2
 - 스프라이트 & SFX 사운드 : https://www.youtube.com/live/EA6e3UeC_Ik?si=is430u7Hb7IvCrG2
