@@ -10,6 +10,8 @@ public static class Enums
     public enum SFXClipType
     {
         UIClick,
+        GameStart,
+        GameEnd,
         PlayerJump,
         PlayerLand,
         PlayerHit,

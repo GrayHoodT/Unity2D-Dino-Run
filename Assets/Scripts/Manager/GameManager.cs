@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     {
         tapToStartBtn = GameObject.Find("Tap To Start Button").GetComponent<Button>();
         tapToStartBtn.onClick.AddListener(GameStart);
+        tapToStartBtn.onClick.AddListener(() => audioEvent.NotifyPlaySFX(Enums.SFXClipType.UIClick));
 
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
         cameraController.Initialize(out cameraEvent);
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         playerEvent.Jumped += () => audioEvent.NotifyPlaySFX(Enums.SFXClipType.PlayerJump);
         playerEvent.Landed += () => audioEvent.NotifyPlaySFX(Enums.SFXClipType.PlayerLand);
+        playerEvent.Hit += () => audioEvent.NotifyPlaySFX(Enums.SFXClipType.PlayerHit);
         playerEvent.Hit += GameEnd;
     }
 
@@ -46,7 +48,7 @@ public class GameManager : MonoBehaviour
     {
         playerController.Enable();
         cameraEvent.NotifyMove();
-        audioEvent.NotifyPlaySFX(Enums.SFXClipType.UIClick);
+        audioEvent.NotifyPlaySFX(Enums.SFXClipType.GameStart);
     }
 
     public void GamePause()
@@ -58,6 +60,6 @@ public class GameManager : MonoBehaviour
     {
         playerController.Disable();
         cameraEvent.NotifyPunch();
-        audioEvent.NotifyPlaySFX(Enums.SFXClipType.PlayerHit);
+        audioEvent.NotifyPlaySFX(Enums.SFXClipType.GameEnd);
     }
 }
