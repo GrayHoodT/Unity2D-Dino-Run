@@ -9,11 +9,9 @@
 https://play.unity.com/mg/other/webgl-builds-392594
 
 2. 조작법
-
 점프 - Space
 
 3. 제작 기간
-
 1일
 
 4. 에셋 리스트
