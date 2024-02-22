@@ -88,3 +88,7 @@ crashlytics-build.properties
 
 /[Aa]ssets/[Tt]extMesh Pro
 [Tt]extMesh Pro.meta
+
+/[Ww]ebGL Builds
+[Cc]onnectwebgl.zip
+[Ww]ebgl_sharing
