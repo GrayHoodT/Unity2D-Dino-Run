@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem.Utilities;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -61,6 +63,9 @@ public class GameManager : MonoBehaviour
 
         tapToStartBtn.onClick.AddListener(StartGame);
         gameResetBtn.onClick.AddListener(ResetGame);
+
+        InputSystem.onAnyButtonPress
+            .CallOnce((ctrl) => { StartGame(); });
 
         playerEvent.Jumped += () => audioEvent.NotifyPlaySFX(Enums.SFXClipType.PlayerJump);
         playerEvent.Landed += () => audioEvent.NotifyPlaySFX(Enums.SFXClipType.PlayerLand);
