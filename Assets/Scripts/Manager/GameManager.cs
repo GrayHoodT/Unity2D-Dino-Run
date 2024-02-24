@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
         playerController.Disable();
     }
 
-    private void EndGame()
+    public void EndGame()
     {
         gameEndPanel.SetActive(true);
         playerController.Disable();
@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
             scroller.isPlay = false;
     }
 
-    private void ResetGame()
+    public void ResetGame()
     {
         SceneManager.LoadScene(0);
     }
