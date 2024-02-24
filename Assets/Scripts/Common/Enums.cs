@@ -17,13 +17,5 @@ public static class Enums
         PlayerHit,
         Count
     }
-
-    public enum ObstaclePoolType
-    {
-        ObstacleA,
-        ObstacleB,
-        ObstacleC,
-        Count
-    }
 }
 
