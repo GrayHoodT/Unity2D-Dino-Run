@@ -13,3 +13,5 @@
 - 스프라이트 & SFX 사운드 : https://www.youtube.com/live/EA6e3UeC_Ik?si=is430u7Hb7IvCrG2
 - BGM 사운드 : https://assetstore.unity.com/packages/audio/music/casual-game-bgm-5-135943
 - 게임 스타트 및 게임 엔드 사운드 : https://youtu.be/WZ4TQQWTNPU?si=EvD4io1dk4o5m8tB
+
+![ClassDiagram](https://github.com/GrayHoodT/Unity2D-DinoRun/assets/137641161/98108f5f-a21c-4cc0-a455-60152f7c42d1)
