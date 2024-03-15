@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -36,22 +34,22 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        titlePanel = GameObject.Find("Title Panel");
-        gameEndPanel = GameObject.Find("Game End Panel");
+        titlePanel = GameObject.Find(Defines.TITLE_PANEL_NAME);
+        gameEndPanel = GameObject.Find(Defines.GAME_END_PANEL_NAME);
 
-        tapToStartBtn = GameObject.Find("Tap To Start Button").GetComponent<Button>();
+        tapToStartBtn = GameObject.Find(Defines.TAP_TO_START_BUTTON_NAME).GetComponent<Button>();
         tapToStartBtn.onClick.AddListener(() => audioEvent.NotifyPlaySFX(Enums.SFXClipType.UIClick));
 
-        gameResetBtn = GameObject.Find("Game Reset Button").GetComponent<Button>();
+        gameResetBtn = GameObject.Find(Defines.GAME_RESET_BUTTON_NAME).GetComponent<Button>();
         gameResetBtn.onClick.AddListener(() => audioEvent.NotifyPlaySFX(Enums.SFXClipType.UIClick));
 
-        cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+        cameraController = GameObject.Find(Defines.MAIN_CAMERA_NAME).GetComponent<CameraController>();
         cameraController.Initialize(out cameraEvent);
 
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerController = GameObject.Find(Defines.PLAYER_NAME).GetComponent<PlayerController>();
         playerController.Initialize(out playerEvent);
 
-        audioController = GameObject.Find("Audio Controller").GetComponent<AudioController>();
+        audioController = GameObject.Find(Defines.AUDIO_CONTROLLER_NAME).GetComponent<AudioController>();
         audioController.Initialize(out audioEvent);
         
         audioEvent.NotifyPlayBGM();
